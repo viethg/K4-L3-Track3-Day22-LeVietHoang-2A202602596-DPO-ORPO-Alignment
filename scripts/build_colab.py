@@ -23,9 +23,9 @@ STAGES = [
     ("01_sft_mini", "core"),
     ("02_preference_data", "core"),
     ("03_dpo_train", "core"),
-    ("03b_dpo_variants", "bonus"),
     ("04_compare_and_eval", "core"),
     ("05_merge_deploy_gguf", "bonus"),
+    ("03b_dpo_variants", "bonus"),
     ("06_benchmark", "bonus"),
     ("07_grpo_bonus", "bonus"),
 ]

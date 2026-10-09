@@ -283,14 +283,25 @@ def sanity_accuracy(score: Scorer) -> float:
 
 def make_rm_scorer(name: str | Path, max_length: int = 4096) -> Scorer:
     """Load a sequence-classification reward model (e.g. Skywork-Reward-V2) on the GPU."""
+    import gc
     import torch
     from transformers import AutoModelForSequenceClassification, AutoTokenizer
 
+    gc.collect()
+    torch.cuda.empty_cache()
+
     dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16  # T4: fp16
     tok = AutoTokenizer.from_pretrained(name)
-    rm = AutoModelForSequenceClassification.from_pretrained(
-        name, dtype=dtype, device_map="cuda:0", attn_implementation="sdpa", num_labels=1
-    ).eval()
+    try:
+        rm = AutoModelForSequenceClassification.from_pretrained(
+            name, dtype=dtype, device_map="cuda:0", attn_implementation="sdpa", num_labels=1
+        ).eval()
+    except (torch.cuda.OutOfMemoryError, RuntimeError):
+        gc.collect()
+        torch.cuda.empty_cache()
+        rm = AutoModelForSequenceClassification.from_pretrained(
+            name, load_in_4bit=True, device_map="cuda:0", num_labels=1
+        ).eval()
 
     def score(prompt: str, answer: str) -> float:
         conv = [{"role": "user", "content": prompt}, {"role": "assistant", "content": answer}]

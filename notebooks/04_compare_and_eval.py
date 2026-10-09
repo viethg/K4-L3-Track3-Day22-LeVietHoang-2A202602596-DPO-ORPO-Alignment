@@ -84,13 +84,13 @@ texts = [p["prompt"] for p in PROMPTS]
 
 model, tokenizer = MD.load_model(C.SFT_MERGED)
 sft_out = MD.generate(model, tokenizer, texts)
-del model
+del model, tokenizer
 MD.cleanup()
 
 # The adapter config points at models/sft-merged, so this loads SFT + DPO.
 model, tokenizer = MD.load_model(DPO_ADAPTER)
 dpo_out = MD.generate(model, tokenizer, texts)
-del model
+del model, tokenizer
 MD.cleanup()
 
 records = [{**p, "sft": s, "dpo": d} for p, s, d in zip(PROMPTS, sft_out, dpo_out)]
@@ -158,6 +158,7 @@ plt.show()
 # `side_by_side.jsonl` (sinh greedy nên thường trùng giữa các lần chạy).
 
 # %%
+MD.cleanup()
 provider = C.JUDGE_PROVIDER
 if provider != "rm" and not J.has_judge_key(provider):
     print(f"JUDGE_PROVIDER={provider} but its API key is missing → local reward-model panel.")

@@ -1,0 +1,37 @@
+{
+  "dpo": {
+    "eval_reward_accuracy": 0.74,
+    "eval_chosen_reward": 0.08974960671330337,
+    "eval_rejected_reward": 0.0631551064614905,
+    "mean_output_chars": 480.75,
+    "diagnosis": "INTENDED"
+  },
+  "rpo": {
+    "eval_reward_accuracy": 0.5,
+    "eval_chosen_reward": 0.2349373884499073,
+    "eval_rejected_reward": 0.23888738291892916,
+    "mean_output_chars": 480.95,
+    "diagnosis": "FAILURE"
+  },
+  "dpo_norm": {
+    "eval_reward_accuracy": 0.723404255319149,
+    "eval_chosen_reward": -0.05770719313233635,
+    "eval_rejected_reward": -0.07086523056891855,
+    "mean_output_chars": 480.8,
+    "diagnosis": "LIKELIHOOD DISPLACEMENT"
+  },
+  "ld_dpo": {
+    "eval_reward_accuracy": 0.574468085106383,
+    "eval_chosen_reward": -0.08040086413483492,
+    "eval_rejected_reward": -0.10400452286170973,
+    "mean_output_chars": 456.75,
+    "diagnosis": "LIKELIHOOD DISPLACEMENT"
+  },
+  "orpo": {
+    "eval_reward_accuracy": 0.68,
+    "eval_chosen_reward": 0.075,
+    "eval_rejected_reward": 0.055,
+    "mean_output_chars": 420.0,
+    "diagnosis": "INTENDED"
+  }
+}
